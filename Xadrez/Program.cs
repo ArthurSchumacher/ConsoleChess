@@ -13,6 +13,7 @@ namespace Xadrez
                 Board newChessBoard = new Board(8, 8);
 
                 newChessBoard.placePiece(new Tower(ChessBoard.Enums.Color.Black, newChessBoard), new Position(0, 0));
+                newChessBoard.placePiece(new King(ChessBoard.Enums.Color.White, newChessBoard), new Position(0, 1));
 
                 Screen.PrintChessBoard(newChessBoard);
             }

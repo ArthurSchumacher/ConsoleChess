@@ -11,6 +11,6 @@ public class King : ChessPiece
 
     public override string ToString()
     {
-        return "R";
+        return "K";
     }
 }

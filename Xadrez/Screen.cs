@@ -8,11 +8,13 @@ public static class Screen
     {
         for (int i = 0; i < board.Lines; i++)
         {
+            Console.Write(8 - i + " ");
             for (int j = 0; j < board.Columns; j++)
             {
                 if (board.piece(i, j) != null)
                 {
-                    Console.Write($"{board.piece(i, j)} ");
+                    PrintChessPiece(board.piece(i, j));
+                    Console.Write(" ");
                 }
                 else
                 {
@@ -22,6 +24,23 @@ public static class Screen
             }
 
             Console.WriteLine();
+        }
+
+        Console.WriteLine("  A B C D E F G H");
+    }
+
+    public static void PrintChessPiece(ChessPiece piece)
+    {
+        if (piece.Color == ChessBoard.Enums.Color.White)
+        {
+            Console.Write(piece);
+        }
+        else
+        {
+            ConsoleColor tmpConsoleColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write(piece);
+            Console.ForegroundColor = tmpConsoleColor;
         }
     }
 }
