@@ -1,10 +1,45 @@
 using Xadrez.ChessBoard;
+using Xadrez.ChessBoard.Enums;
 using Xadrez.Chess;
+using System.Collections.Generic;
 
 namespace Xadrez;
 
 public static class Screen
 {
+    public static void PrintGame(ChessGame game)
+    {
+        PrintChessBoard(game.ChessBoard);
+
+        PrintCapturedPieces(game);
+
+        Console.WriteLine($"\n\nTurno: {game.Turn}");
+        Console.WriteLine($"Aguardando jogada: {game.Player}");
+    }
+
+    public static void PrintCapturedPieces(ChessGame game)
+    {
+        Console.WriteLine("\nPeças capturadas: ");
+        Console.Write("Brancas: ");
+        PrintSet(game.capturedPiecesByColor(Color.White));
+
+        Console.Write("\nPretas: ");
+        ConsoleColor tmpColor = Console.BackgroundColor;
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        PrintSet(game.capturedPiecesByColor(Color.Black));
+        Console.ForegroundColor = tmpColor;
+    }
+
+    public static void PrintSet(HashSet<ChessPiece> piecesSet)
+    {
+        Console.Write("[");
+        foreach (ChessPiece item in piecesSet)
+        {
+            Console.Write($"{item}, ");
+        }        
+        Console.Write("]");
+    }
+
     public static void PrintChessBoard(Board board)
     {
         for (int i = 0; i < board.Lines; i++)

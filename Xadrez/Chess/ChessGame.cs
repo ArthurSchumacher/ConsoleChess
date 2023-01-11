@@ -1,6 +1,8 @@
 using Xadrez.ChessBoard;
 using Xadrez.ChessBoard.Enums;
 using Xadrez.ChessBoard.Exceptions;
+using System.Collections.Generic;
+
 namespace Xadrez.Chess;
 
 public class ChessGame
@@ -9,6 +11,8 @@ public class ChessGame
     public int Turn { get; private set; }
     public Color Player { get; private set; }
     public bool isOver { get; set; }
+    private HashSet<ChessPiece> Pieces;
+    private HashSet<ChessPiece> CapturedPieces;
 
     public ChessGame()
     {
@@ -16,7 +20,15 @@ public class ChessGame
         Turn = 1;
         Player = Color.White;
         isOver = false;
+        Pieces = new HashSet<ChessPiece>();
+        CapturedPieces = new HashSet<ChessPiece>();
         PlacePieces();
+    }
+
+    public void placeNewPiece(char column, int line, ChessPiece piece)
+    {
+        ChessBoard.placePiece(piece, new ChessPosition(column, line).toPosition());
+        Pieces.Add(piece);
     }
 
     public void PlacePieces()
@@ -27,16 +39,16 @@ public class ChessGame
 
     private void BlackPieces()
     {
-        ChessBoard.placePiece(new Tower(Color.Black, ChessBoard), new ChessPosition('a', 8).toPosition());
-        ChessBoard.placePiece(new Tower(Color.Black, ChessBoard), new ChessPosition('h', 8).toPosition());
-        ChessBoard.placePiece(new King(Color.Black, ChessBoard), new ChessPosition('e', 8).toPosition());
+        placeNewPiece('a', 8, new Tower(Color.Black, ChessBoard));
+        placeNewPiece('h', 8, new Tower(Color.Black, ChessBoard));
+        placeNewPiece('e', 8, new King(Color.Black, ChessBoard));
     }
 
     private void WhitePieces()
     {
-        ChessBoard.placePiece(new Tower(Color.White, ChessBoard), new ChessPosition('a', 1).toPosition());
-        ChessBoard.placePiece(new Tower(Color.White, ChessBoard), new ChessPosition('h', 1).toPosition());
-        ChessBoard.placePiece(new King(Color.White, ChessBoard), new ChessPosition('e', 1).toPosition());
+        placeNewPiece('a', 1, new Tower(Color.White, ChessBoard));
+        placeNewPiece('h', 1, new Tower(Color.White, ChessBoard));
+        placeNewPiece('e', 1, new King(Color.White, ChessBoard));
     }
 
     public void isValidOrigin(Position pos)
@@ -70,6 +82,41 @@ public class ChessGame
 
         ChessPiece capturedPiece = ChessBoard.removePiece(destiny);
         ChessBoard.placePiece(p, destiny);
+
+        if (capturedPiece != null)
+        {
+            CapturedPieces.Add(capturedPiece);
+        }
+    }
+
+    public HashSet<ChessPiece> capturedPiecesByColor(Color color)
+    {
+        HashSet<ChessPiece> tmpHashSet = new HashSet<ChessPiece>();
+        foreach (ChessPiece item in CapturedPieces)
+        {
+            if (item.Color == color)
+            {
+                tmpHashSet.Add(item);
+            }
+        }
+
+        return tmpHashSet;
+    }
+
+    public HashSet<ChessPiece> piecesStillInGame(Color color)
+    {
+        HashSet<ChessPiece> tmpHashSet = new HashSet<ChessPiece>();
+        foreach (ChessPiece item in Pieces)
+        {
+            if (item.Color == color)
+            {
+                tmpHashSet.Add(item);
+            }
+        }
+
+        tmpHashSet.ExceptWith(capturedPiecesByColor(color));
+
+        return tmpHashSet;
     }
 
     public void Play(Position origin, Position destiny)

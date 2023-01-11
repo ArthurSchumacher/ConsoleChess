@@ -17,10 +17,7 @@ namespace Xadrez
                     try
                     {
                         Console.Clear();
-                        Screen.PrintChessBoard(newChessGame.ChessBoard);
-
-                        Console.WriteLine($"\nTurno: {newChessGame.Turn}");
-                        Console.WriteLine($"Aguardando jogada: {newChessGame.Player}");
+                        Screen.PrintGame(newChessGame);
 
                         Console.Write("\nOrigem: ");
                         Position origin = Screen.readChessPosition().toPosition();
