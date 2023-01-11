@@ -11,6 +11,12 @@ public class Position
         Column = column;
     }
 
+    public void setPosition(int x, int y)
+    {
+        Line = x;
+        Column = y;
+    }
+
     public override string ToString()
     {
         return $"({Line}, {Column})";

@@ -2,7 +2,7 @@ using Xadrez.ChessBoard.Enums;
 using Xadrez.Chess;
 namespace Xadrez.ChessBoard;
 
-public class ChessPiece
+public abstract class ChessPiece
 {
     public Position Position { get; set; }
     public Color Color { get; protected set; }
@@ -21,4 +21,6 @@ public class ChessPiece
     {
         MovesQTD++;
     }
+
+    public abstract bool[,] possibleMoves();
 }
