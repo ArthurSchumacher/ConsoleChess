@@ -12,4 +12,9 @@ public class Board
         Columns = columns;
         Pieces = new ChessPiece[lines, columns];
     }
+
+    public ChessPiece piece(int line, int column)
+    {
+        return Pieces[line, column];
+    }
 }
