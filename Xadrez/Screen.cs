@@ -1,4 +1,5 @@
 using Xadrez.ChessBoard;
+using Xadrez.Chess;
 
 namespace Xadrez;
 
@@ -27,6 +28,15 @@ public static class Screen
         }
 
         Console.WriteLine("  A B C D E F G H");
+    }
+
+    public static ChessPosition readChessPosition()
+    {
+        string tmpAnswer = Console.ReadLine();
+        char column = tmpAnswer[0];
+        int line = int.Parse(tmpAnswer[1] + "");
+
+        return new ChessPosition(column, line);
     }
 
     public static void PrintChessPiece(ChessPiece piece)

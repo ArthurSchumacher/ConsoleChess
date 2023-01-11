@@ -36,6 +36,20 @@ public class Board
         p.Position = pos;
     }
 
+    public ChessPiece removePiece(Position pos)
+    {
+        if (piece(pos) == null)
+        {
+            return null;
+        }
+
+        ChessPiece tmpPiece = piece(pos);
+        tmpPiece.Position = null;
+        Pieces[pos.Line, pos.Column] = null;
+
+        return tmpPiece;
+    }
+
     public bool isValidPosition(Position pos)
     {
         if (pos.Line < 0 || pos.Line >= Lines || pos.Column < 0 || pos.Column >= Columns)

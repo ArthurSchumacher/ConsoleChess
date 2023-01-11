@@ -1,5 +1,5 @@
 ﻿using Xadrez.ChessBoard;
-using Xadrez.ChessGame;
+using Xadrez.Chess;
 using Xadrez.ChessBoard.Exceptions;
 
 namespace Xadrez
@@ -10,12 +10,22 @@ namespace Xadrez
         {
             try
             {
-                Board newChessBoard = new Board(8, 8);
+                ChessGame newChessGame = new ChessGame();
 
-                newChessBoard.placePiece(new Tower(ChessBoard.Enums.Color.Black, newChessBoard), new Position(0, 0));
-                newChessBoard.placePiece(new King(ChessBoard.Enums.Color.White, newChessBoard), new Position(0, 1));
+                while (!newChessGame.isOver)
+                {
+                    Console.Clear();
+                    Screen.PrintChessBoard(newChessGame.ChessBoard);
 
-                Screen.PrintChessBoard(newChessBoard);
+                    Console.Write("\nOrigem: ");
+                    Position origin = Screen.readChessPosition().toPosition();
+
+                    Console.Write("Destino: ");
+                    Position destiny = Screen.readChessPosition().toPosition();
+
+                    newChessGame.MovePiece(origin, destiny);
+                }
+
             }
             catch (BoardException e)
             {

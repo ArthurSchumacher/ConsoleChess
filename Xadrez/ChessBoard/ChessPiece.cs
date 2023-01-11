@@ -1,5 +1,5 @@
 using Xadrez.ChessBoard.Enums;
-using Xadrez.ChessGame;
+using Xadrez.Chess;
 namespace Xadrez.ChessBoard;
 
 public class ChessPiece
@@ -15,5 +15,10 @@ public class ChessPiece
         Color = color;
         Board = board;
         MovesQTD = 0;
+    }
+
+    public void Moves()
+    {
+        MovesQTD++;
     }
 }

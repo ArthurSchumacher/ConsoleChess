@@ -1,7 +1,7 @@
 using Xadrez.ChessBoard;
 using Xadrez.ChessBoard.Enums;
 
-namespace Xadrez.ChessGame;
+namespace Xadrez.Chess;
 
 public class King : ChessPiece
 {

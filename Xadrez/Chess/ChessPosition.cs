@@ -1,6 +1,6 @@
 using Xadrez.ChessBoard;
 
-namespace Xadrez.ChessGame;
+namespace Xadrez.Chess;
 
 public class ChessPosition
 {
