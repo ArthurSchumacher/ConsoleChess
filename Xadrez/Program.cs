@@ -1,5 +1,6 @@
 ﻿using Xadrez.ChessBoard;
 using Xadrez.ChessGame;
+using Xadrez.ChessBoard.Exceptions;
 
 namespace Xadrez
 {
@@ -7,11 +8,19 @@ namespace Xadrez
     {
         static void Main(string[] args)
         {
-            Board newChessBoard = new Board(8, 8);
+            try
+            {
+                Board newChessBoard = new Board(8, 8);
 
-            newChessBoard.placePiece(new Tower(ChessBoard.Enums.Color.Black, newChessBoard), new Position(0, 0));
-            
-            Screen.PrintChessBoard(newChessBoard);
+                newChessBoard.placePiece(new Tower(ChessBoard.Enums.Color.Black, newChessBoard), new Position(0, 0));
+                newChessBoard.placePiece(new Tower(ChessBoard.Enums.Color.Black, newChessBoard), new Position(0, 9));
+
+                Screen.PrintChessBoard(newChessBoard);
+            }
+            catch (BoardException e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }
