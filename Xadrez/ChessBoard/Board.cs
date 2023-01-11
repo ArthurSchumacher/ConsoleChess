@@ -17,4 +17,10 @@ public class Board
     {
         return Pieces[line, column];
     }
+
+    public void placePiece(ChessPiece p, Position pos)
+    {
+        Pieces[pos.Line, pos.Column] = p;
+        p.Position = pos;
+    }
 }
