@@ -41,15 +41,15 @@ public class ChessGame
 
     private void BlackPieces()
     {
-        placeNewPiece('a', 8, new Tower(Color.Black, ChessBoard));
-        placeNewPiece('h', 8, new Tower(Color.Black, ChessBoard));
-        placeNewPiece('e', 8, new King(Color.Black, ChessBoard));
+        //placeNewPiece('a', 8, new Tower(Color.Black, ChessBoard));
+        placeNewPiece('b', 8, new Tower(Color.Black, ChessBoard));
+        placeNewPiece('a', 8, new King(Color.Black, ChessBoard));
     }
 
     private void WhitePieces()
     {
-        placeNewPiece('a', 1, new Tower(Color.White, ChessBoard));
-        placeNewPiece('h', 1, new Tower(Color.White, ChessBoard));
+        placeNewPiece('c', 1, new Tower(Color.White, ChessBoard));
+        placeNewPiece('h', 7, new Tower(Color.White, ChessBoard));
         placeNewPiece('e', 1, new King(Color.White, ChessBoard));
     }
 
@@ -95,7 +95,7 @@ public class ChessGame
 
     public bool testCheckMate(Color color)
     {
-        if (isInCheckMate(color))
+        if (!isInCheckMate(color))
         {
             return false;
         }
