@@ -13,6 +13,7 @@ public class ChessGame
     public bool isOver { get; set; }
     private HashSet<ChessPiece> Pieces;
     private HashSet<ChessPiece> CapturedPieces;
+    public bool CheckMate { get; private set; }
 
     public ChessGame()
     {
@@ -20,6 +21,7 @@ public class ChessGame
         Turn = 1;
         Player = Color.White;
         isOver = false;
+        CheckMate = false;
         Pieces = new HashSet<ChessPiece>();
         CapturedPieces = new HashSet<ChessPiece>();
         PlacePieces();
@@ -34,7 +36,7 @@ public class ChessGame
     public void PlacePieces()
     {
         BlackPieces();
-        WhitePieces();        
+        WhitePieces();
     }
 
     private void BlackPieces()
@@ -69,13 +71,13 @@ public class ChessGame
 
     public void isValidDestiny(Position origin, Position destiny)
     {
-        if(!ChessBoard.piece(origin).canMoveToDestiny(destiny))
+        if (!ChessBoard.piece(origin).canMoveToDestiny(destiny))
         {
             throw new BoardException("Destiny position is invalid.");
         }
     }
 
-    public void MovePiece(Position origin, Position destiny)
+    public ChessPiece MovePiece(Position origin, Position destiny)
     {
         ChessPiece p = ChessBoard.removePiece(origin);
         p.Moves();
@@ -86,6 +88,87 @@ public class ChessGame
         if (capturedPiece != null)
         {
             CapturedPieces.Add(capturedPiece);
+        }
+
+        return capturedPiece;
+    }
+
+    public bool testCheckMate(Color color)
+    {
+        if (isInCheckMate(color))
+        {
+            return false;
+        }
+
+        foreach (ChessPiece item in piecesStillInGame(color))
+        {
+            bool[,] tmpMatrix = item.possibleMoves();
+
+            for (int i = 0; i < ChessBoard.Lines; i++)
+            {
+                for (int j = 0; j < ChessBoard.Columns; j++)
+                {
+                    if (tmpMatrix[i, j])
+                    {
+                        Position origem = item.Position;
+                        Position destiny = new Position(i, j);
+                        ChessPiece capturedPiece = MovePiece(origem, destiny);
+                        bool tmpTestCheckMate = isInCheckMate(color);
+                        undoMove(origem, destiny, capturedPiece);
+
+                        if (!tmpTestCheckMate)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public void undoMove(Position origin, Position destiny, ChessPiece capturedPiece)
+    {
+        ChessPiece piece = ChessBoard.removePiece(destiny);
+        piece.UndoMoves();
+
+        if (capturedPiece != null)
+        {
+            ChessBoard.placePiece(capturedPiece, destiny);
+            CapturedPieces.Remove(capturedPiece);
+        }
+
+        ChessBoard.placePiece(piece, origin);
+    }
+
+    public void Play(Position origin, Position destiny)
+    {
+        ChessPiece capturedPiece = MovePiece(origin, destiny);
+
+        if (isInCheckMate(Player))
+        {
+            undoMove(origin, destiny, capturedPiece);
+            throw new BoardException("You can't put yourself in checkmate.");
+        }
+
+        if (isInCheckMate(Enemy(Player)))
+        {
+            CheckMate = true;
+        }
+        else
+        {
+            CheckMate = false;
+        }
+
+        if (testCheckMate(Enemy(Player)))
+        {
+            isOver = true;
+        }
+        else
+        {
+            Turn++;
+            ChangePlayer();
         }
     }
 
@@ -119,16 +202,57 @@ public class ChessGame
         return tmpHashSet;
     }
 
-    public void Play(Position origin, Position destiny)
+    private Color Enemy(Color color)
     {
-        MovePiece(origin, destiny);
-        Turn++;
-        ChangePlayer();
+        if (color == Color.White)
+        {
+            return Color.Black;
+        }
+        else
+        {
+            return Color.White;
+        }
+    }
+
+    private ChessPiece King(Color color)
+    {
+        foreach (ChessPiece item in piecesStillInGame(color))
+        {
+            if (item is King)
+            {
+                return item;
+            }
+        }
+
+        return null;
+    }
+
+    public bool isInCheckMate(Color color)
+    {
+        ChessPiece K;
+        K = King(color);
+
+        if (K == null)
+        {
+            throw new BoardException("King not found.");
+        }
+
+        foreach (ChessPiece item in piecesStillInGame(Enemy(color)))
+        {
+            bool[,] tmpMatrix = item.possibleMoves();
+
+            if (tmpMatrix[K.Position.Line, K.Position.Column])
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void ChangePlayer()
     {
-        if(Player == Color.White)
+        if (Player == Color.White)
         {
             Player = Color.Black;
         }

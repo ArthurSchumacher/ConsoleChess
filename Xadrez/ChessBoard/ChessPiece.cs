@@ -22,6 +22,11 @@ public abstract class ChessPiece
         MovesQTD++;
     }
 
+    public void UndoMoves()
+    {
+        MovesQTD--;
+    }
+
     public bool isAnyPossibleMoves()
     {
         bool[,] tmpMatrix = possibleMoves();

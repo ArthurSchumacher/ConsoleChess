@@ -42,6 +42,8 @@ namespace Xadrez
 
                 }
 
+                Console.Clear();
+                Screen.PrintGame(newChessGame);
             }
             catch (BoardException e)
             {

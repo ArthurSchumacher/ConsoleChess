@@ -14,7 +14,20 @@ public static class Screen
         PrintCapturedPieces(game);
 
         Console.WriteLine($"\n\nTurno: {game.Turn}");
-        Console.WriteLine($"Aguardando jogada: {game.Player}");
+        if (!game.isOver)
+        {
+            Console.WriteLine($"Aguardando jogada: {game.Player}");
+
+            if (game.CheckMate)
+            {
+                Console.WriteLine("Xeque!");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Xeque-mate!");
+            Console.WriteLine($"Vencedor: {game.Player}");
+        }
     }
 
     public static void PrintCapturedPieces(ChessGame game)
@@ -36,7 +49,7 @@ public static class Screen
         foreach (ChessPiece item in piecesSet)
         {
             Console.Write($"{item}, ");
-        }        
+        }
         Console.Write("]");
     }
 
