@@ -41,16 +41,44 @@ public class ChessGame
 
     private void BlackPieces()
     {
-        //placeNewPiece('a', 8, new Tower(Color.Black, ChessBoard));
-        placeNewPiece('b', 8, new Tower(Color.Black, ChessBoard));
-        placeNewPiece('a', 8, new King(Color.Black, ChessBoard));
+        placeNewPiece('a', 8, new Rook(Color.Black, ChessBoard));
+        placeNewPiece('b', 8, new Knight(Color.Black, ChessBoard));
+        placeNewPiece('c', 8, new Bishop(Color.Black, ChessBoard));
+        placeNewPiece('d', 8, new Queen(Color.Black, ChessBoard));
+        placeNewPiece('e', 8, new King(Color.Black, ChessBoard));
+        placeNewPiece('f', 8, new Bishop(Color.Black, ChessBoard));
+        placeNewPiece('g', 8, new Knight(Color.Black, ChessBoard));
+        placeNewPiece('h', 8, new Rook(Color.Black, ChessBoard));
+
+        placeNewPiece('a', 7, new Pawn(Color.Black, ChessBoard));
+        placeNewPiece('b', 7, new Pawn(Color.Black, ChessBoard));
+        placeNewPiece('c', 7, new Pawn(Color.Black, ChessBoard));
+        placeNewPiece('d', 7, new Pawn(Color.Black, ChessBoard));
+        placeNewPiece('e', 7, new Pawn(Color.Black, ChessBoard));
+        placeNewPiece('f', 7, new Pawn(Color.Black, ChessBoard));
+        placeNewPiece('g', 7, new Pawn(Color.Black, ChessBoard));
+        placeNewPiece('h', 7, new Pawn(Color.Black, ChessBoard));
     }
 
     private void WhitePieces()
     {
-        placeNewPiece('c', 1, new Tower(Color.White, ChessBoard));
-        placeNewPiece('h', 7, new Tower(Color.White, ChessBoard));
+        placeNewPiece('a', 1, new Rook(Color.White, ChessBoard));
+        placeNewPiece('b', 1, new Knight(Color.White, ChessBoard));
+        placeNewPiece('c', 1, new Bishop(Color.White, ChessBoard));
+        placeNewPiece('d', 1, new Queen(Color.White, ChessBoard));
         placeNewPiece('e', 1, new King(Color.White, ChessBoard));
+        placeNewPiece('f', 1, new Bishop(Color.White, ChessBoard));
+        placeNewPiece('g', 1, new Knight(Color.White, ChessBoard));
+        placeNewPiece('h', 1, new Rook(Color.White, ChessBoard));
+
+        placeNewPiece('a', 2, new Pawn(Color.White, ChessBoard));
+        placeNewPiece('b', 2, new Pawn(Color.White, ChessBoard));
+        placeNewPiece('c', 2, new Pawn(Color.White, ChessBoard));
+        placeNewPiece('d', 2, new Pawn(Color.White, ChessBoard));
+        placeNewPiece('e', 2, new Pawn(Color.White, ChessBoard));
+        placeNewPiece('f', 2, new Pawn(Color.White, ChessBoard));
+        placeNewPiece('g', 2, new Pawn(Color.White, ChessBoard));
+        placeNewPiece('h', 2, new Pawn(Color.White, ChessBoard));
     }
 
     public void isValidOrigin(Position pos)

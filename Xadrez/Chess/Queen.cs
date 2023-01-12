@@ -3,15 +3,15 @@ using Xadrez.ChessBoard.Enums;
 
 namespace Xadrez.Chess;
 
-public class Tower : ChessPiece
+public class Queen : ChessPiece
 {
-    public Tower(Color color, Board board) : base(color, board)
+    public Queen(Color color, Board board) : base(color, board)
     {
     }
 
     public override string ToString()
     {
-        return "T";
+        return "Q";
     }
 
     private bool canMove(Position pos)
@@ -37,6 +37,20 @@ public class Tower : ChessPiece
             }
 
             pos.Line -= 1;
+        }
+
+        // North East
+        pos.setPosition(Position.Line - 1, Position.Column + 1);
+        while (Board.isValidPosition(pos) && canMove(pos))
+        {
+            tmpMatrix[pos.Line, pos.Column] = true;
+
+            if (Board.piece(pos) != null && Board.piece(pos).Color != Color)
+            {
+                break;
+            }
+
+            pos.setPosition(pos.Line - 1, pos.Column + 1);
         }
 
         // East
@@ -67,6 +81,20 @@ public class Tower : ChessPiece
             pos.Line += 1;
         }
 
+        // North West
+        pos.setPosition(Position.Line - 1, Position.Column - 1);
+        while (Board.isValidPosition(pos) && canMove(pos))
+        {
+            tmpMatrix[pos.Line, pos.Column] = true;
+
+            if (Board.piece(pos) != null && Board.piece(pos).Color != Color)
+            {
+                break;
+            }
+
+            pos.setPosition(pos.Line - 1, pos.Column - 1);
+        }
+
         // West
         pos.setPosition(Position.Line, Position.Column - 1);
         while (Board.isValidPosition(pos) && canMove(pos))
@@ -79,6 +107,34 @@ public class Tower : ChessPiece
             }
 
             pos.Column -= 1;
+        }
+
+        // South East
+        pos.setPosition(Position.Line + 1, Position.Column + 1);
+        while (Board.isValidPosition(pos) && canMove(pos))
+        {
+            tmpMatrix[pos.Line, pos.Column] = true;
+
+            if (Board.piece(pos) != null && Board.piece(pos).Color != Color)
+            {
+                break;
+            }
+
+            pos.setPosition(pos.Line + 1, pos.Column + 1);
+        }
+
+        // South West
+        pos.setPosition(Position.Line + 1, Position.Column - 1);
+        while (Board.isValidPosition(pos) && canMove(pos))
+        {
+            tmpMatrix[pos.Line, pos.Column] = true;
+
+            if (Board.piece(pos) != null && Board.piece(pos).Color != Color)
+            {
+                break;
+            }
+
+            pos.setPosition(pos.Line + 1, pos.Column - 1);
         }
 
         return tmpMatrix;
